@@ -1,0 +1,75 @@
+prjdir: H:/SWAT-Climate/CliWARA
+CcDataDir: H:/SCService-RM/CliWARA_CChange/Downscale/SQM
+FcstDataDir: H:/SCService-RM/CliWARA_SForecast/0_RTForecast/Daily_Sampling
+StnDir: User
+ObsDayDir: $(prjdir)/Observed/User
+GhcnDir: $(prjdir)/Observed/GHCN
+SmplDir: $(prjdir)/Observed/Samples
+SwatDbDir: $(prjdir)/Observed/SWAT
+ObsMonDir: $(prjdir)/Observed/Monthly
+SwatRunDir: $(prjdir)/SWAT/TxtInOut
+SwatObsDir: $(prjdir)/SWAT/Observed
+SwatCcDir: $(prjdir)/SWAT/CChange
+SwatFcstDir: $(prjdir)/SWAT/SForecast
+BndDir: $(prjdir)/GISDB
+CioNYSKIP: 0
+Syear_cal: 2002
+Eyear_cal: 2009
+Syear_val: 2008
+Eyear_val: 2012
+Syear_clim: 1981
+Eyear_clim: 2012
+StnFile: Station-Info.csv
+StnIDs:
+  - TH431301
+OutletIDs:
+  - 1
+OutletNms:
+  - LT-Dam
+ObsFile: flow_SWAT.csv    #flow_SWAT.csv
+CChangeOpt: On
+MdlNms:
+  - bcc-csm1-1
+  - bcc-csm1-1-m
+  - CanESM2
+  - CCSM4
+  - CESM1-BGC
+  - CESM1-CAM5
+  - CMCC-CM
+  - CMCC-CMS
+  - CNRM-CM5
+  - CSIRO-Mk3-6-0
+  - FGOALS-g2
+  - FGOALS-s2
+  - GFDL-CM3
+  - GFDL-ESM2G
+  - GFDL-ESM2M
+  - HadGEM2-AO
+  - HadGEM2-CC
+  - HadGEM2-ES
+  - inmcm4
+  - IPSL-CM5A-LR
+  - IPSL-CM5A-MR
+  - IPSL-CM5B-LR
+  - MIROC-ESM
+  - MIROC-ESM-CHEM
+  - MIROC5
+  - MPI-ESM-LR
+  - MPI-ESM-MR
+  - MRI-CGCM3
+  - NorESM1-M
+ScnNms:
+  - historical
+  - rcp45
+  - rcp85
+Syear_hist: 1976
+Eyear_hist: 2005
+Syear_rcp: 2011
+Eyear_rcp: 2040
+SForecastOpt: On
+fiyearmode: FALSE
+Syear_Fcst: 1983
+Eyear_Fcst: 2012
+OutputTypes:
+  - rch
+  - hru
