@@ -1,1 +1,97 @@
 
+
+#' @export
+Set.Working.Environment2 <- function(BaseDir, PrjName, EnvFile, override=list()) {
+
+  options(stringsAsFactors=FALSE)
+
+  PrjDir = file.path(BaseDir, PrjName)             # Project folder
+  dir.create(PrjDir, showWarnings=F, recursive=T)
+
+  SwatRunDir = file.path(PrjDir, "TxtInOut")           #Run dir using calibrated dataset
+  dir.create(SwatRunDir, showWarnings=F, recursive=T)
+
+  SwatObsDir = file.path(PrjDir, "Observed")           #Observed-based EDI
+  dir.create(SwatObsDir, showWarnings=F, recursive=T)
+
+  SwatCcDir = file.path(PrjDir, "CChange")             #Climate Change-based EDI
+  dir.create(SwatCcDir, showWarnings=F, recursive=T)
+
+  SwatFcstDir = file.path(PrjDir, "SForecast")         #Seasonal forecast-based EDI
+  dir.create(SwatFcstDir, showWarnings=F, recursive=T)
+
+  DbDir = file.path(BaseDir, "Database")           # Database folder
+  dir.create(DbDir, showWarnings=F, recursive=T)
+  ObsDayDir = file.path(DbDir, "observed")            # Daily Observation folder
+  dir.create(ObsDayDir, showWarnings=F, recursive=T)
+  ObsMonDir = file.path(DbDir, "var-predictand")            # Daily Observation folder
+  dir.create(ObsMonDir, showWarnings=F, recursive=T)
+  BndDir = file.path(DbDir, "gis-boundary")        # Boundary file folder with Shape format
+  dir.create(BndDir, showWarnings=F, recursive=T)
+  StnDir = file.path(DbDir, "station-info")        # Station information folder
+  dir.create(StnDir, showWarnings=F, recursive=T)
+  SmplDir = file.path(DbDir, "obs_samples")        # Observed sample folder for temporal DS with filling NAs
+  dir.create(SmplDir, showWarnings=F, recursive=T)
+  SwatDbDir = file.path(DbDir, "swat")        # SWAT related DB
+  dir.create(SwatDbDir, showWarnings=F, recursive=T)
+
+  if (missing(EnvFile)) {
+    EnvFile = file.path(BaseDir, sprintf("%s.txt", PrjName))
+  } else {
+    EnvFile = file.path(BaseDir, EnvFile)
+  }
+
+  if(!file.exists(EnvFile)){
+    stop(sprintf("Environment file %s does not exist!", EnvFile))
+  }
+
+  tbl = read.table(EnvFile, header=F, sep="=", stringsAsFactors=FALSE)
+  colnames(tbl) = c("varnm", "varval")
+  for(i in 1:nrow(tbl)) {
+    assign(tbl$varnm[i], unlist(strsplit(tbl$varval[i], split=",")))
+  }
+
+  outList = list("PrjDir"=PrjDir,
+                 "DbDir"=DbDir,
+                 "ObsDayDir"=ObsDayDir,
+                 "StnDir"=StnDir,
+                 "SmplDir"=SmplDir,
+                 "SwatRunDir"=SwatRunDir,
+                 "SwatObsDir"=SwatObsDir,
+                 "SwatDbDir"=SwatDbDir,
+                 "CioNYSKIP"=CioNYSKIP,
+                 "Syear_cal"=Syear_cal,
+                 "Eyear_cal"=Eyear_cal,
+                 "Syear_val"=Syear_val,
+                 "Eyear_val"=Eyear_val,
+                 "Syear_clim"=Syear_clim,
+                 "Eyear_clim"=Eyear_clim,
+                 "StnFile"=StnFile,
+                 "StnIDs"=StnIDs,
+                 "OutletIDs"=OutletIDs,
+                 "OutletNms"=OutletNms,
+                 "ObsFile"=ObsFile,
+                 "CChangeOpt"=CChangeOpt,
+                 "CcDataDir"=CcDataDir,
+                 "SwatCcDir"=SwatCcDir,
+                 "MdlNms"=MdlNms,
+                 "ScnNms"=ScnNms,
+                 "Syear_hist"=Syear_hist,
+                 "Eyear_hist"=Eyear_hist,
+                 "Syear_rcp"=Syear_rcp,
+                 "Eyear_rcp"=Eyear_rcp,
+                 "SForecastOpt"=SForecastOpt,
+                 "FcstDataDir"=FcstDataDir,
+                 "SwatFcstDir"=SwatFcstDir,
+                 "Syear_Fcst"=Syear_Fcst,
+                 "Eyear_Fcst"=Eyear_Fcst,
+                 "OutputTypes"=OutputTypes)
+
+  # override
+  for (varname in names(override)) {
+    outList[[varname]] = override[[varname]]
+  }
+
+  return(outList)
+}
+
